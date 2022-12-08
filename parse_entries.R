@@ -42,7 +42,7 @@ effect_to_tibble <- function(md) {
   title2 <- str_extract(md, "(?<=\\*\\s?\n\\*\\*).*?(?=\\*\\*)")
   description <- str_extract(md, "(?<=[[:alpha:])]{1}\\*\\*).*?(?=\n)") %>% str_trim() %>% str_remove_all("(^[:punct:]+\\s*)|[:punct:]+$")
 
-  categories <- c("Status", "Original paper", "Critiques?", "Original effect size", "Replication effect size")
+  categories <- c("Status", "Original papers?", "Critiques?", "Original effect size", "Replication effect size")
 
   entry <- md %>% str_remove(regex(".*(?=\n \\* Status:)", dotall = TRUE))
 
@@ -64,7 +64,8 @@ effect_to_tibble <- function(md) {
 #     list(value) %>% set_names(name)
 #   }) %>% flatten() %>% .[str_lengths(.)>0]
 
-tibble::tibble(title, title2, description, !!!details) %>% rename(Critiques = `Critiques?`)
+tibble::tibble(title, title2, description, !!!details) %>% rename(Critiques = `Critiques?`,
+                                                                  `Original paper` = `Original papers?`)
 }
 
 effects_df <- md_split_named %>% map_dfr(.id = "category", ~map_dfr(.x, effect_to_tibble)) %>%
@@ -182,10 +183,16 @@ replication_effects <- effects_df %>% select(effect_id, entered_text = `Replicat
   ungroup() %>%
   mutate(type = "replication", parse_effect(entered_text))
 
+
+original_extracted <- original_effects %>% filter(!is.na(size_reported)) %>% pull(effect_id) %>% unique()
+replication_extracted <- replication_effects %>% filter(!is.na(size_reported)) %>% pull(effect_id) %>% unique()
+effect_sizes_extracted <- intersect(original_extracted, replication_extracted)
+
 safe_cr_cn <- safely(cr_cn)
 
 extract_paper <- function(entries) {
   map_dfr(entries, function (entry) {
+    if(is.na(entry)) return(tibble(parsed = FALSE))
   if (str_count(entry, "http") > 1) {
     warning("Two links found - cannot parse more than one: ", entry)
     return(tibble(parsed = FALSE))
@@ -197,7 +204,7 @@ extract_paper <- function(entries) {
       warning("citeseerx URLs contain a doi parameter, but no actual doi - not extracted")
       return(tibble(parsed = FALSE))
     }
-    doi <- str_extract(entry, "(?<=(doi/)|(doi\\.org/)).*?(?=[? )])") %>% str_remove("full/")
+    doi <- str_extract(entry, "(?<=(doi/)|(doi\\.org/)).*?(?=[? )])") %>% str_remove("(full/)|(epdf/)")
   } else {
     return(tibble(parsed = FALSE))
   }
@@ -215,7 +222,7 @@ extract_paper <- function(entries) {
   }
   if (is.null(ref$result)) {
     warning("Crossref returned nothing - likely timeout")
-    return(tibble(parsed = FALSE))
+    return(tibble(parsed = FALSE, timeout = TRUE))
   }
 
   ref <- ref$result
@@ -237,13 +244,32 @@ extract_paper <- function(entries) {
   })
   }
 
-original_papers <- effects_df %>% select(effect_id, original_paper = `Original paper`) %>%
+original_papers <- effects_df %>% filter(effect_id %in% effect_sizes_extracted) %>% select(effect_id, original_paper = `Original paper`) %>%
   mutate(extract_paper(original_paper))
 
+papers_extracted_ids <- original_papers %>% filter(!is.na(title)) %>% pull(effect_id) %>% unique()
 
+original_papers <- original_papers %>% mutate(publication_id = row_number())
 
-critique_papers <-
+# Create output tables
 
+include_ids <- intersect(papers_extracted_ids, effect_sizes_extracted)
 
+effects <- effects_df %>% filter(effect_id %in% include_ids) %>% select(
+  effect_id, category, title, description, status = Status
+)
 
+effect_sizes <- bind_rows(original_effects, replication_effects) %>% filter(effect_id %in% include_ids) %>% select(
+  effect_id, entered_text, type, parsed, label, metric_reported, size_reported, metric_converted, size_converted
+) %>% mutate(publication_id = NA)
+
+publications <- original_papers %>% select(-publication_id, -description)
+
+publications_join <- original_papers %>% select(effect_id, publication_id, description) %>% mutate(use = "original") %>% select(-description, everything(), description)
+
+library(readr)
+write_csv(effects, "./data/effects.csv")
+write_csv(publications, "./data/publications.csv")
+write_csv(effect_sizes, "./data/effect_sizes.csv")
+write_csv(publications_join, "./data/publications_join.csv")
 

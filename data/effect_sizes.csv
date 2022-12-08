@@ -1,0 +1,129 @@
+effect_id,entered_text,type,parsed,label,metric_reported,size_reported,metric_converted,size_converted,publication_id
+7,"_r_ = 0.13/ _d_ = 0.26 [converted, using [escal](https://www.escal.site/)]",original,TRUE,"_r_ = 0.13/ _d_ = 0.26 [converted, using [escal](https",r,0.13,d,0.26,NA
+15,_d_ = 1.21 (estimated from test-statistics in paper).,original,TRUE,NA,d,1.21,NA,NA,NA
+18,Study 1: _d_ = 1.00 for intentionality in imperfective-aspect condition,original,TRUE,Study 1,d,1,NA,NA,NA
+18, Study 2: _d_ = 1.23 for imagery in imperfective-aspect condition,original,TRUE,Study 2,d,1.23,NA,NA,NA
+18," Study 3: d= 1.20 for intentionality, _d_ = 0.92 for imagery and 0.55 for intention attribution in imperfective-aspect condition.",original,FALSE,Study 3,NA,NA,NA,NA,NA
+31,"Asian-identity-salient > control > female-identity-salient, r=.27",original,TRUE,NA,r,0.27,NA,NA,NA
+31," Asian-identity-salient > female-identity-salient, r=.35.",original,TRUE,NA,r,0.35,NA,NA,NA
+58,"Critcher & Gilovich, 2008: d = 0.49, 95% CI [0.25, 0.72] according to [Shanks et al., 2020, p. 9](https://doi.org/10.1525/collabra.310)",original,TRUE,"Critcher & Gilovich, 2008",d,0.49,NA,NA,NA
+75,_r_ = .267,original,TRUE,NA,r,0.267,NA,NA,NA
+76,_r_ = .180​.,original,TRUE,NA,r,0.18,NA,NA,NA
+77,_r_ = .480,original,TRUE,NA,r,0.48,NA,NA,NA
+78,_r _= .155,original,TRUE,NA,r,0.155,NA,NA,NA
+79,_r_ = .257,original,TRUE,NA,r,0.257,NA,NA,NA
+80,_r_= .131,original,TRUE,NA,r,0.131,NA,NA,NA
+81,_r _= .205,original,TRUE,NA,r,0.205,NA,NA,NA
+82,_r_ = -.03,original,TRUE,NA,r,-0.03,NA,NA,NA
+83,_r_ = .111,original,TRUE,NA,r,0.111,NA,NA,NA
+84,_r _= .264,original,TRUE,NA,r,0.264,NA,NA,NA
+108,"Money market: Cohen’s _d_ = -0.59 [-0.89, -0.29]",original,TRUE,Money market,d,-0.59,NA,NA,NA
+108," Social market: Cohen’s _d_ = 0.25 [-0.55, 0.05]",original,TRUE,Social market,d,0.25,NA,NA,NA
+127,_r_ = .125,original,TRUE,NA,r,0.125,NA,NA,NA
+129,_r_ = .266,original,TRUE,NA,r,0.266,NA,NA,NA
+132,_r_ = .255,original,TRUE,NA,r,0.255,NA,NA,NA
+139,left MTG: _r_ =.35,original,TRUE,left MTG,r,0.35,NA,NA,NA
+139, right STS: _r_ = .35,original,TRUE,right STS,r,0.35,NA,NA,NA
+139," right EC: _r_ = .35, left amygdala: _r_ = .30",original,FALSE,right EC,NA,NA,NA,NA,NA
+139, right amygdala: _r_ = .32.,original,TRUE,right amygdala,r,0.32,NA,NA,NA
+140,left SPL: _r_ =.38,original,TRUE,left SPL,r,0.38,NA,NA,NA
+140, mPFC: _r_ = -.28.,original,TRUE,mPFC,r,-0.28,NA,NA,NA
+142,_r_ = .93.,original,TRUE,NA,r,0.93,NA,NA,NA
+7,"_r_ = .02/_d_ = 0.04 [converted, using [escal](https://www.escal.site/)]",replication,TRUE,"_r_ = .02/_d_ = 0.04 [converted, using [escal](https",r,0.02,d,0.04,NA
+15,"* [Pashler et al. (2013)](https://doi.org/10.1016/j.jesp.2013.05.011):
+ * Experiment 1: _d_ = 0.18 (non-significant",replication,TRUE,* [Pashler et al. (2013)](https,d,0.18,NA,NA,NA
+15," not replicated).
+ * Experiment 2: _d_ = -0.14 (non-significant",replication,TRUE, * Experiment 2,d,-0.14,NA,NA,NA
+15," opposite direction).
+ * Experiment 3:
+ * Measure 1: _d _= -0.14 (non-significant",replication,TRUE, * Experiment 3,d,-0.14,NA,NA,NA
+15, opposite direction,replication,FALSE,NA,NA,NA,NA,NA,NA
+15," estimated from test statistics in paper).
+ * Measure 2: _d_ = -0.13 (non-significant",replication,TRUE, * Measure 2,d,-0.13,NA,NA,NA
+15, opposite direction,replication,FALSE,NA,NA,NA,NA,NA,NA
+15," estimated from test statistics in paper).
+ * Experiment 4:
+ * Measure 1: _d_ = 0.04 (non-significant",replication,TRUE, * Experiment 4,d,0.04,NA,NA,NA
+15, not replicated,replication,FALSE,NA,NA,NA,NA,NA,NA
+15," estimated from descriptive statistics)
+ * Measure 2: _d_ = -0.14 (non-significant",replication,TRUE, * Measure 2,d,-0.14,NA,NA,NA
+15, opposite direction,replication,FALSE,NA,NA,NA,NA,NA,NA
+15," estimated from descriptive statistics)
+ * [Dalal and Hakel (2016)](https://doi.org/10.1177/1094428116639131): _d _= -0.07 (non-significant",replication,TRUE, * [Dalal and Hakel (2016)](https,d,-0.07,NA,NA,NA
+15, opposite direction,replication,FALSE,NA,NA,NA,NA,NA,NA
+15, estimated from descriptive statistics in Table 2 (to get _N_ of groups) and 3 (to get the means and standard deviations).,replication,FALSE,NA,NA,NA,NA,NA,NA
+18,All effect sizes are located in Eerland et al. 2016: intentionality: Arnal (lab): _d_ = -0.35,replication,TRUE,All effect sizes are located in Eerland et al. 2016,d,-0.35,NA,NA,NA
+18, Berger (lab): d = -0.98,replication,TRUE, Berger (lab),d,-0.98,NA,NA,NA
+18, Birt and Aucoin (lab): _d_ = -0.38,replication,TRUE, Birt and Aucoin (lab),d,-0.38,NA,NA,NA
+18, Eerland et al. (lab): _d_ =0.16,replication,TRUE, Eerland et al. (lab),d,0.16,NA,NA,NA
+18, Eerland et al.(online): _d_ = -0.33,replication,TRUE, Eerland et al.(online),d,-0.33,NA,NA,NA
+18, Ferretti (lab): _d_ = -0.01,replication,TRUE, Ferretti (lab),d,-0.01,NA,NA,NA
+18, Knepp (lab): d = -0.95,replication,TRUE, Knepp (lab),d,-0.95,NA,NA,NA
+18, Kurby and Kibbe (lab): d = -0.14,replication,TRUE, Kurby and Kibbe (lab),d,-0.14,NA,NA,NA
+18, Melcher (lab): d = 0.65,replication,TRUE, Melcher (lab),d,0.65,NA,NA,NA
+18, Michael (lab): d = -0.41,replication,TRUE, Michael (lab),d,-0.41,NA,NA,NA
+18, Poirier et al. (lab): d = 0.32,replication,TRUE, Poirier et al. (lab),d,0.32,NA,NA,NA
+18, Prenoveau and Carlucci (lab): d = -0.38. Meta-analytic estimate for laboratory replications only: _d_ = -0.24. Imagery: Arnal (lab): _d_ = −0.01,replication,FALSE, Prenoveau and Carlucci (lab),NA,NA,NA,NA,NA
+18, Berger (lab): d = −0.45,replication,TRUE, Berger (lab),d,-0.45,NA,NA,NA
+18, Birt and Aucoin (lab): _d_ = −0.40,replication,TRUE, Birt and Aucoin (lab),d,-0.4,NA,NA,NA
+18, Eerland et al. (lab): _d_ =−0.01,replication,TRUE, Eerland et al. (lab),d,-0.01,NA,NA,NA
+18, Eerland et al.(online): _d_ = -−0.13,replication,TRUE, Eerland et al.(online),d,NA,NA,NA,NA
+18, Ferretti (lab): _d_ = 0.33,replication,TRUE, Ferretti (lab),d,0.33,NA,NA,NA
+18, Knepp (lab): d = 0.00,replication,TRUE, Knepp (lab),d,0,NA,NA,NA
+18, Kurby and Kibbe (lab): d = 0.02,replication,TRUE, Kurby and Kibbe (lab),d,0.02,NA,NA,NA
+18, Melcher (lab): d = −0.16,replication,TRUE, Melcher (lab),d,-0.16,NA,NA,NA
+18, Michael (lab): d = -0.08,replication,TRUE, Michael (lab),d,-0.08,NA,NA,NA
+18, Poirier et al. (lab): d = -0.19,replication,TRUE, Poirier et al. (lab),d,-0.19,NA,NA,NA
+18, Prenoveau and Carlucci (lab): d = -0.02. Meta-analytic estimate for laboratory replications only: _d_ = -0.08. Intention attribution: Arnal (lab): _d_ = -0.15,replication,FALSE, Prenoveau and Carlucci (lab),NA,NA,NA,NA,NA
+18, Berger (lab): d = -0.15,replication,TRUE, Berger (lab),d,-0.15,NA,NA,NA
+18, Birt and Aucoin (lab): _d_ = 0.08,replication,TRUE, Birt and Aucoin (lab),d,0.08,NA,NA,NA
+18, Eerland et al. (lab): _d_ =-0.01,replication,TRUE, Eerland et al. (lab),d,-0.01,NA,NA,NA
+18, Eerland et al.(online): _d_ = 0.02,replication,TRUE, Eerland et al.(online),d,0.02,NA,NA,NA
+18, Ferretti (lab): _d_ = -0.19,replication,TRUE, Ferretti (lab),d,-0.19,NA,NA,NA
+18, Knepp (lab): d = -0.29,replication,TRUE, Knepp (lab),d,-0.29,NA,NA,NA
+18, Kurby and Kibbe (lab): d = 0.00,replication,TRUE, Kurby and Kibbe (lab),d,0,NA,NA,NA
+18, Melcher (lab): d = 0.12,replication,TRUE, Melcher (lab),d,0.12,NA,NA,NA
+18, Michael (lab): d = 0.13,replication,TRUE, Michael (lab),d,0.13,NA,NA,NA
+18, Poirier et al. (lab): d = 0.06,replication,TRUE, Poirier et al. (lab),d,0.06,NA,NA,NA
+18, Prenoveau and Carlucci (lab): d = 0.03. Meta-analytic estimate for laboratory replications: _d_ = 0.00.,replication,FALSE, Prenoveau and Carlucci (lab),NA,NA,NA,NA,NA
+31,"Gibson et al. 2014: No group differences, η2=.01",replication,TRUE,Gibson et al. 2014,η2,0.01,NA,NA,NA
+31," Asian-primed vs. female-primed, p=.18, d=.27",replication,FALSE,NA,NA,NA,NA,NA,NA
+31," Including only those who were aware of the stereotypes, group accuracy p=.02, η2=.04, and the means followed the predicted pattern, Asian (M=.63), Control (M=.55), and Female (M=.51)",replication,FALSE,NA,NA,NA,NA,NA,NA
+31," Likewise, female-primed participants performed worse than Asian-primed participants, p=.02, d=.53. Moon & Roeder (2014): Group accuracy, p=.44, g2=.004",replication,FALSE," Likewise, female-primed participants performed worse than Asian-primed participants, p=.02, d=.53. Moon & Roeder (2014)",NA,NA,NA,NA,NA
+31," female-primed and Asian-primed conditions, p=.43, d=.17",replication,FALSE,NA,NA,NA,NA,NA,NA
+31," Analysing just those who were aware of the stereotype, p=.28,g2=.012",replication,FALSE,NA,NA,NA,NA,NA,NA
+31," female-primed participants vs. Asian-primed participants, p=.28, d=.27.",replication,FALSE,NA,NA,NA,NA,NA,NA
+58,"[Shanks et al., 2020, p. 9](https://doi.org/10.1525/collabra.310): d = -0.02, 95% CI [-0.08, 0.05]",replication,TRUE,"[Shanks et al., 2020, p. 9](https",d,-0.02,NA,NA,NA
+75,Camerer et al.: _r_ = -.015,replication,TRUE,Camerer et al.,r,-0.015,NA,NA,NA
+75, O’Donnell et al.: _r_= -.039,replication,TRUE, O’Donnell et al.,r,-0.039,NA,NA,NA
+75, Shah et al.: _η<sup>2</sup>_ = .004.,replication,TRUE, Shah et al.,η<sup>2</sup>,0.004,NA,NA,NA
+76,_r_ = .055​,replication,TRUE,NA,r,0.055,NA,NA,NA
+77,_r_ = .104.​,replication,TRUE,NA,r,0.104,NA,NA,NA
+78,_r _= .209,replication,TRUE,NA,r,0.209,NA,NA,NA
+79,_r_ = -.004,replication,TRUE,NA,r,-0.004,NA,NA,NA
+80,_r_= -.110.,replication,TRUE,NA,r,-0.11,NA,NA,NA
+81,_r _= .024.,replication,TRUE,NA,r,0.024,NA,NA,NA
+82,_r _= -.006,replication,TRUE,NA,r,-0.006,NA,NA,NA
+83,_r_ = .027,replication,TRUE,NA,r,0.027,NA,NA,NA
+84,_r _= .090,replication,TRUE,NA,r,0.09,NA,NA,NA
+108,"Imada et al. (2022): Study 1: Money market: Cohen’s _d_ = -1.25 [-1.43, -1.06]",replication,TRUE,Imada et al. (2022),d,-1.25,NA,NA,NA
+108," Social market: Cohen’s _d_ = -0.43 [-0.60, -0,26]",replication,TRUE, Social market,d,NA,NA,NA,NA
+108," Study 2: Money market: Cohen’s _d_ = -1.30 [-1.39, -1.22]",replication,TRUE, Study 2,d,-1.3,NA,NA,NA
+108," Social market: Cohen’s _d_ = -0.87 [-0.94, -0.79]",replication,TRUE, Social market,d,-0.87,NA,NA,NA
+127,_r_ = .139,replication,TRUE,NA,r,0.139,NA,NA,NA
+129,_r_ = .036,replication,TRUE,NA,r,0.036,NA,NA,NA
+132,_r_ = -.092,replication,TRUE,NA,r,-0.092,NA,NA,NA
+139,"* [Kanai et al., (2012)](https://doi.org/10.1098/rspb.2011.1959): left MTG: _r_ =.38",replication,TRUE,"* [Kanai et al., (2012)](https",r,0.38,NA,NA,NA
+139, right STS: _r_ = .44,replication,TRUE, right STS,r,0.44,NA,NA,NA
+139, right EC: _r_ = .48,replication,TRUE, right EC,r,0.48,NA,NA,NA
+139, left amygdala: _r_ = .33,replication,TRUE, left amygdala,r,0.33,NA,NA,NA
+139," right amygdala: _r_ = .48.
+ * [Boekel et al. (2015)](https://doi.org/10.1016/j.cortex.2014.11.019): left MTG: r = .18",replication,FALSE, right amygdala,NA,NA,NA,NA,NA
+139, right STS: _r_ = .11,replication,TRUE, right STS,r,0.11,NA,NA,NA
+139, right EC: _r_ = .06,replication,TRUE, right EC,r,0.06,NA,NA,NA
+139, left amygdala: _r_ = -.14,replication,TRUE, left amygdala,r,-0.14,NA,NA,NA
+139, right amygdala: _r_ = .02.,replication,TRUE, right amygdala,r,0.02,NA,NA,NA
+140,[Boekel et al. (2015)](https://doi.org/10.1016/j.cortex.2014.11.019): left SPL: _r_ =.22,replication,TRUE,[Boekel et al. (2015)](https,r,0.22,NA,NA,NA
+140, mPFC: _r_ = -.19.,replication,TRUE, mPFC,r,-0.19,NA,NA,NA
+142,​​Forstmann et al. (2010): _r_ = .76,replication,TRUE,​​Forstmann et al. (2010),r,0.76,NA,NA,NA
+142, [Keuken et al. (2017)](https://doi.org/10.1016/j.cortex.2017.03.007): _r_ = -.08.,replication,TRUE, [Keuken et al. (2017)](https,r,-0.08,NA,NA,NA
