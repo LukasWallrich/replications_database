@@ -31,7 +31,7 @@ md_split_named <- map(md_split, \(x) {
   entries <- x %>% str_remove(".*\\s+---")
   list(entries) %>% set_names(name)
 }) %>% flatten() %>% map(~str_split(.x, "\n####") %>% map(str_squish_mild)) %>% flatten() %>% map(\(x) {
-  x[str_lengths(x) > 0]
+  x[str_length(x) > 0]
 })
 
 
@@ -62,7 +62,7 @@ effect_to_tibble <- function(md) {
 #     name <- str_extract(x, ".*?(?=:)")
 #     value <- str_remove(x, ".*?: ")
 #     list(value) %>% set_names(name)
-#   }) %>% flatten() %>% .[str_lengths(.)>0]
+#   }) %>% flatten() %>% .[str_length(.)>0]
 
 tibble::tibble(title, title2, description, !!!details) %>% rename(Critiques = `Critiques?`,
                                                                   `Original paper` = `Original papers?`)
@@ -193,26 +193,29 @@ safe_cr_cn <- safely(cr_cn)
 extract_paper <- function(entries) {
   map_dfr(entries, function (entry) {
     if(is.na(entry)) return(tibble(parsed = FALSE))
+    entry <- entry %>% str_remove("\\(https:\\/\\/scholar.google.com\\/scholar\\?cites.*?\\)")
   if (str_count(entry, "http") > 1) {
     warning("Two links found - cannot parse more than one: ", entry)
     return(tibble(parsed = FALSE))
   }
   citations <- str_extract(entry, "(?<=\\[)citations.*?(?=\\]\\.?$)")
+  notes <- entry %>% str_remove(".*?[( ]\\d{4}[^\\d]")
+
   entry <- str_remove(entry, "\\[citations.*?\\]\\.?$")
   if (str_detect(entry, "doi")) {
     if (str_detect(entry, "citeseerx.ist.psu.edu")) {
       warning("citeseerx URLs contain a doi parameter, but no actual doi - not extracted")
       return(tibble(parsed = FALSE))
     }
-    doi <- str_extract(entry, "(?<=(doi/)|(doi\\.org/)).*?(?=[? )])") %>% str_remove("(full/)|(epdf/)")
+    doi <- str_extract(entry, "10\\..*?(?=[? )])") %>% str_trim()
   } else {
-    return(tibble(parsed = FALSE))
+    return(tibble(parsed = FALSE, citations = citations, description = notes))
   }
   message("Requesting ", doi)
 
   rq_time <- Sys.time()
 
-  ref <- safe_cr_cn(doi, format = "citeproc-json-ish")
+  ref <- safe_cr_cn(doi, format = "citeproc-json-ish", cache = TRUE)
 
   #if (difftime(Sys.time(), rq_time, units = "secs") > 10) browser()
 
@@ -227,29 +230,46 @@ extract_paper <- function(entries) {
 
   ref <- ref$result
 
-  message(ref$published$`date-parts`[1])
-
-  notes <- entry %>% str_remove(".*?[( ]\\d{4}[^\\d]")
+  #message(ref$published$`date-parts`[1])
 
   authors_string <- paste(ref$author$family, ref$author$given, sep = ", ", collapse = " and ")
 
+  unlist_paste <- function(x) {
+    x[map_lgl(x, is.null)] <- NA
+    map_chr(x, ~paste(.x, collapse = ", "))
+  }
   #Is subtitle needed? Was on first example. Can there be a better separator?
   tibble(title = paste(ref$title, ref$subtitle, sep = "."), year = ref$published$`date-parts`[1],
          authors = list(ref$author), authors_string = authors_string, doi = doi, url = ref$URL, publication = ref$`container-title`,
          pages = ref$page, volume = ref$volume, issue = ref$issue,
          citation_count_CR = ref$`is-referenced-by-count`,
          citation_count_entered = citations, description = notes,
-         citation = generate_apa_citation(authors_string, year),
-         reference = generate_apa_reference(authors_string, year, title, publication, volume, issue, doi, url))
+        ) %>%
+    mutate(across(c(where(is.list), -authors), ~.x %>% unlist_paste()))
   })
   }
 
-original_papers <- effects_df %>% filter(effect_id %in% effect_sizes_extracted) %>% select(effect_id, original_paper = `Original paper`) %>%
-  mutate(extract_paper(original_paper))
+#Fix APA citations - currently unnecessarily disambiguated (a etc) - check CiteSource code
+original_papers <- effects_df %>% filter(effect_id %in% effect_sizes_extracted) %>%
+  select(effect_id, original_paper = `Original paper`) %>%
+  mutate(extract_paper(original_paper)) %>%
+  mutate(citation = generate_apa_citation(authors_string, year),
+reference = generate_apa_reference(authors_string, year, title, publication, volume, issue, doi, url)) %>%
+  mutate(use = "original")
 
-papers_extracted_ids <- original_papers %>% filter(!is.na(title)) %>% pull(effect_id) %>% unique()
+# Replication papers
+replication_papers <- effects_df %>% filter(effect_id %in% effect_sizes_extracted) %>%
+  select(effect_id, critique_paper = Critiques) %>%
+  # Currently cannot parse entries with more than one link (i.e. when there are two papers)
+  mutate(extract_paper(critique_paper)) %>%
+  mutate(citation = generate_apa_citation(authors_string, year),
+         reference = generate_apa_reference(authors_string, year, title, publication, volume, issue, doi, url)) %>%
+  mutate(use = "replication")
 
-original_papers <- original_papers %>% mutate(publication_id = row_number())
+publications <- bind_rows(original_papers, replication_papers) %>% mutate(temp_publication_id = row_number())
+
+papers_extracted_ids <- intersect(original_papers %>% filter(!is.na(title)) %>% pull(effect_id) %>% unique(),
+                                  replication_papers %>% filter(!is.na(title)) %>% pull(effect_id) %>% unique())
 
 # Create output tables
 
@@ -261,11 +281,30 @@ effects <- effects_df %>% filter(effect_id %in% include_ids) %>% select(
 
 effect_sizes <- bind_rows(original_effects, replication_effects) %>% filter(effect_id %in% include_ids) %>% select(
   effect_id, entered_text, type, parsed, label, metric_reported, size_reported, metric_converted, size_converted
-) %>% mutate(publication_id = NA)
+)
 
-publications <- original_papers %>% select(-publication_id, -description)
+publications_join <- publications %>% select(effect_id, temp_publication_id, use, description) %>% select(-description, everything(), description)
 
-publications_join <- original_papers %>% select(effect_id, publication_id, description) %>% mutate(use = "original") %>% select(-description, everything(), description)
+publications <- publications %>% select(-effect_id, -description) %>%
+  group_by(doi) %>% mutate(publication_id = dplyr::cur_group_id()) %>% ungroup()
+
+publications_join <- publications %>% select(publication_id, temp_publication_id) %>% right_join(publications_join) %>% select(-temp_publication_id)
+
+publications <- publications %>% mutate(entry = coalesce(original_paper, critique_paper)) %>%
+  select(-c(temp_publication_id, original_paper, critique_paper)) %>%
+  group_by(doi) %>% slice_head(n=1) %>% ungroup()
+
+# Add publication_id to effect_sizes - needs more advanced matching with multiple effect sizes
+effect_sizes <- effect_sizes %>% left_join(publications_join %>% select(effect_id, use, publication_id), by = c("effect_id", "type" = "use"))
+
+# Extract effect sizes
+effect_sizes <- publications_join %>%
+  mutate(N_entered = str_extract_all(description, "[nN] *= *[0-9]+")) %>%
+  select(effect_id, type = use, N_entered) %>% left_join(effect_sizes, .)
+
+# Extract clear sample sizes (other would need to be matched further)
+effect_sizes <- effect_sizes %>% mutate(N = if_else(lengths(N_entered) == 1,
+                                                    str_extract_all(map_chr(N_entered, first), "\\d+") %>% map_dbl(as.numeric), NA))
 
 library(readr)
 write_csv(effects, "./data/effects.csv")

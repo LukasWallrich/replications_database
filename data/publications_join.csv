@@ -1,45 +1,90 @@
-effect_id,publication_id,use,description
-7,1,original," 3 studies, 2 of which are split into Part A and Part B with n’s = 1A: 40 and 1B: 196 ; 2A: 32 and 2B: 230; Experiment 3: 70 "
-9,2,original,NA
-15,3,original,"](https://doi.org/10.1016/j.jesp.2004.07.001), between-subjects, _n_ = 64 "
-18,4,original,: 3 experiments with Study 1: n = 5458; Study 2: n = 37; Study 3: n = 48. 
-28,5,original,NA
-31,6,original,"[‘Domain-specific Effects of Stereotypes on Performance’](https://journals.sagepub.com/doi/10.1111/1467-9280.00111), Shih et al.1999"
-39,7,original,NA
-50,8,original,NA
-54,9,original,NA
-58,10,original," 3 studies w. Between-subjects manipulation of incidental anchors, n = 265 (Study 1) + 207 (Study 2) + 194 (Study 3) = 666. [citations=261(Google Scholar, August 2022)]​."
-70,11,original,NA
-73,12,original,NA
-75,13,original,; 5 experiments with Study 1: n=60; Study 2: n=68; Study 3: n=143; Study 4: n=118; Study 5: n=137 
-76,14,original," with n=121. [citations=8(GS, November 2021)]​."
-77,15,original," with n=401. [citation=51(GS, November 2021)]​."
-78,16,original,") Study 3, with n=231. [citation=103(GS, November 2021)]​."
-79,17,original," Study 3 with n=152. [citation=54(GS, November 2021)]​."
-80,18,original," with n=111. [citation=22(GS, November 2021)]​."
-81,19,original," Study 4, with n=96. [citation=2332(GS, November 2021)]​."
-82,20,original," with n=642. [citation=18(GS, November 2021)]​."
-83,21,original," with n=568. [citation=78(GS, November 2021)]​."
-84,22,original," with n=73. [citation=315(GS, November 2021)]​."
-95,23,original,NA
-96,24,original,NA
-108,25,original,"; sample size = 614 (Experiment 1). [citations=1261(Google Scholar, June 2022)]​"
-118,26,original,NA
-126,27,original,NA
-127,28,original,"; with n=199. [citation=26(GS, November 2021)]​."
-128,29,original,NA
-129,30,original," with n=102. [citation=114(GS, November 2021)]​."
-130,31,original,NA
-131,32,original,NA
-132,33,original," with n=88. [citation=135(GS, November 2021)]​."
-133,34,original,NA
-134,35,original,NA
-135,36,original,NA
-136,37,original,NA
-139,38,original,"](https://doi.org/10.1098/rspb.2011.1959) [n = 125, citations: 411 (GS, May, 2022)]."
-140,39,original,"](https://doi.org/10.1523/JNEUROSCI.5864-10.2011) [n = 155, citations: 110 (GS, May, 2022)]."
-141,40,original,NA
-142,41,original," [](https://doi.org/10.1073/pnas.1004932107)n = 9, citations = 387 (GS, May 2022)]​."
-144,42,original,NA
-148,43,original,NA
-158,44,original,NA
+publication_id,effect_id,use,description
+25,7,original," 3 studies, 2 of which are split into Part A and Part B with n’s = 1A: 40 and 1B: 196 ; 2A: 32 and 2B: 230; Experiment 3: 70 [citations = 304 (GS, October 2021)]."
+41,9,original," 3 experiments with Study 1: n = 89; Study 2: n = 155; Study 3: n = 78. [citations = ~ 1108(GS, November 2021)]."
+5,15,original,"](https://doi.org/10.1016/j.jesp.2004.07.001), between-subjects, _n_ = 64 [citations = 111 (Google Scholar, October 2022)]."
+28,18,original,": 3 experiments with Study 1: n = 5458; Study 2: n = 37; Study 3: n = 48. [citations = 37, (GS, January 2022)]."
+24,28,original,", [n=20 for experiment 1, n=99 for experiment 2, n =57 for experiment 3; ~[722] citations, (GS, March 2022)]"
+21,31,original,"[‘Domain-specific Effects of Stereotypes on Performance’](https://journals.sagepub.com/doi/10.1111/1467-9280.00111), Shih et al.1999"
+41,39,original,NA
+41,50,original,NA
+41,54,original,"; Experiment 1: N = 80, two between-subjects conditions; Experiment 2: N = 80, two between-subjects conditions; Experiment 3: N = 160, four between-subjects conditions [citations = 66 (GS, June 2022)]"
+2,58,original," 3 studies w. Between-subjects manipulation of incidental anchors, n = 265 (Study 1) + 207 (Study 2) + 194 (Study 3) = 666. [citations=261(Google Scholar, August 2022)]​."
+41,70,original,"[n=70, citations= 2840 (GS, October 2022)]."
+41,73,original," with n=36. [citations= 2110 (GS, November 2021)]."
+26,75,original,"; 5 experiments with Study 1: n=60; Study 2: n=68; Study 3: n=143; Study 4: n=118; Study 5: n=137 [citations=1403 (GS, April 2022)]."
+9,76,original," with n=121. [citations=8(GS, November 2021)]​."
+35,77,original," with n=401. [citation=51(GS, November 2021)]​."
+30,78,original,") Study 3, with n=231. [citation=103(GS, November 2021)]​."
+34,79,original," Study 3 with n=152. [citation=54(GS, November 2021)]​."
+11,80,original," with n=111. [citation=22(GS, November 2021)]​."
+27,81,original," Study 4, with n=96. [citation=2332(GS, November 2021)]​."
+1,82,original," with n=642. [citation=18(GS, November 2021)]​."
+38,83,original," with n=568. [citation=78(GS, November 2021)]​."
+29,84,original," with n=73. [citation=315(GS, November 2021)]​."
+10,95,original,"](https://www.tandfonline.com/doi/full/10.1080/13576500500513565?casa_token=JmBY4cKhwcUAAAAA%3AEiko-Fy4woaiDdV_N7INojc6nRquY37yHHonu2673DSBKMd5gG0pdq8_J-TOnkgjKuXcQp7nRD1ccrY), laboratory study in which 765 left- and right-handers were asked to cradle a baby doll. Side of holding was recorded in the studies [citations = 67(GS, June 2022)]​."
+41,96,original,"(https://www.sciencedirect.com/science/article/abs/pii/0006322385902161); study of hand preference in individuals with schizophrenia, depression and healthy controls, 225 schizophrenics and 432 controls. [citations=84(GS, June 2022)]​."
+22,108,original,"; sample size = 614 (Experiment 1). [citations=1261(Google Scholar, June 2022)]​"
+7,118,original,"(Retracted 09/2021); 3 experiments with study n’s 1: 101; 2: 60; 3: 13,488. [citations=482 (GS, June 2022)]"
+41,126,original,"; 6 studies with n’s = 183; 142; 89; 269; 134; 104 [citations = 325 (GS, January 2022)]."
+37,127,original,"; with n=199. [citation=26(GS, November 2021)]​."
+15,128,original," with n=198. [citation=57(GS, November 2021)]​."
+12,129,original," with n=102. [citation=114(GS, November 2021)]​."
+18,130,original," with n=160. [citation=101(GS, November 2021)]​."
+3,131,original," with n=164. [citation=23(GS, November 2021)]​."
+17,132,original," with n=88. [citation=135(GS, November 2021)]​."
+19,133,original," with n=179. [citation=27(GS, November 2021)]​."
+16,134,original," with n=157. [citation=216(GS, November 2021)]​."
+14,135,original," with n=377. [citation=116(GS, November 2021)]."
+36,136,original," with n=200. [citation=114(GS, November 2021)]​."
+20,139,original,"](https://doi.org/10.1098/rspb.2011.1959) [n = 125, citations: 411 (GS, May, 2022)]."
+39,140,original,"](https://doi.org/10.1523/JNEUROSCI.5864-10.2011) [n = 155, citations: 110 (GS, May, 2022)]."
+13,141,original,"](https://doi.org/10.1093/cercor/bhq101) [n = 132; citations = 190 (GS, May 2022)]​."
+6,142,original," [](https://doi.org/10.1073/pnas.1004932107)n = 9, citations = 387 (GS, May 2022)]​."
+41,144,original,", with _n_ = 21 autistic children, 5 Down's syndrome children, 27 neurotypical preschoolers. [n = 53; citation=1163 (GS, April 2022)]​."
+23,148,original,"; 2 experiments, ns=50 in each experiment [citations=1473, GS, November 2021]."
+41,158,original,"2 experiments with Study 1: N= 603; Study 2: N=377 [citation=18 (GS, February2022)]​."
+41,7,replication,"(https://psycnet.apa.org/fulltext/2014-20922-002.html) [n=1146, citations = 957 (GS,October 2021)]"
+33,9,replication,"(https://journals.sagepub.com/doi/pdf/10.1177/1745691616664694) [n = 2284, citations = 110(GS, November 2021)]."
+41,15,replication,NA
+32,18,replication," ](https://journals.sagepub.com/doi/pdf/10.1177/1745691615605826) [meta analysis (total n= 685 for perfective-aspect condition; n = 681 imperfective-aspect condition) of Study 3 citations = 70, (GS, January, 2022)]"
+41,28,replication,NA
+41,31,replication,NA
+31,39,replication,"](https://doi.org/10.1177/1474704916673841) [n=830, citations=48 (GS, February 2022)]. ​"
+41,50,replication," ](https://psycnet.apa.org/fulltext/2014-20922-002.html)[n = 6344, citations = 1082 (GS, June 2022)]"
+41,54,replication,"](https://www.sciencedirect.com/science/article/pii/S0022103115300123) [n = 3,119, citations = 438 (GS, June 2022)]"
+40,58,replication,"(https://doi.org/10.1525/collabra.310) [n(Restaurant item)= 69 (Study 1) + 125 (Study 2) + 422 (Study 3) = 616, citations=11(Google Scholar, August, 2022)]."
+41,70,replication,NA
+41,73,replication,NA
+41,75,replication,NA
+8,76,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=304, citations=0(GS, November 2021)]."
+8,77,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=993, citations=0(GS, November 2021)]"
+8,78,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=603, citations=0(GS, November 2021)]"
+8,79,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=339, citations=0(GS, November 2021)]"
+8,80,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=132, citations=0(GS, November 2021)]"
+8,81,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=229, citations=0(GS, November 2021)]"
+8,82,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=1564, citations=0(GS, November 2021)]"
+8,83,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=1334, citations=0(GS, November 2021)]"
+8,84,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=209, citations=0(GS, November 2021)]"
+41,95,replication,"](https://scholar.google.de/citations?view_op=view_citation&hl=en&user=Z48bDfcAAAAJ&citation_for_view=Z48bDfcAAAAJ:2osOgNQ5qMEC) [n=6799, citations = 27(GS, June 2022), meta-analysis]. ​"
+41,96,replication,"(https://www.cambridge.org/core/journals/the-british-journal-of-psychiatry/article/handedness-language-lateralisation-and-anatomical-asymmetry-in-schizophrenia/BDC270AEC0189932993F7F9917CCEAFA)) [n=5467, citations=536(GS, June 2022), meta-analysis]."
+41,108,replication,"](https://online.ucpress.edu/collabra/article/8/1/32572/120262/Rewarding-More-Is- Better-for-Soliciting-Help-Yet) [n=2203 (study 1) and 999 (study 2), citations=1(Google Scholar, June 2022)]. While Imada et al. (2022) replicated the original finding that people expect others to be more willing to help when they are offered medium amount of cash compared to small amount of cash. However, while Heyman and Ariely (2004) found no significant difference in expected willingness help between those who are offered low amount of goods and medium amount of goods, Imada et al. (2022) found that people expect others to be more willing to help when they are offered with medium amount of goods compared to small amount of goods. Yet, the effect size (medium vs. small) for money was much larger than that for goods, and their replications overall supported the original claim that the sensitivity to compensation level differs depending on money vs. social market relationships."
+41,118,replication,NA
+41,126,replication,"](https://psyarxiv.com/fm7aj/) [Preprint] [direct replication of study 1 of Dubois et al. (2012); N= 415, citations=1 (GS, January 2022)]."
+8,127,replication,"(https://doi.org/10.1073/pnas.2103313118)) [n=507, citations=0(GS, November 2021)]"
+8,128,replication,"](https://doi.org/10.1073/pnas.2103313118) [n=573, citations=0(GS, November 2021)]"
+8,129,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=225, citations=0(GS, November 2021)]"
+8,130,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=389, citations=0(GS, November 2021)]"
+8,131,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=401, citations=0(GS, November 2021)]"
+8,132,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=225, citations=0(GS, November 2021)]"
+8,133,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=467, citations=0(GS, November 2021)]"
+8,134,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=414, citations=0(GS, November 2021)]"
+8,135,replication,"(https://doi.org/10.1073/pnas.2103313118) [n=688, citations=0(GS, November 2021)]"
+8,136,replication,"](https://doi.org/10.1073/pnas.2103313118)[n=595, citations=0(GS, November 2021)]"
+41,139,replication,NA
+4,140,replication,"](https://doi.org/10.1016/j.cortex.2014.11.019) [n = 36, citations = 196 (GS, May, 2022]."
+4,141,replication,"](https://doi.org/10.1016/j.cortex.2014.11.019) [n = 35, citations = 196 (GS, May, 2022]."
+41,142,replication,NA
+41,144,replication,"](https://psycnet.apa.org/fulltext/2019-75285-001.html) [Review; citations=65 (GS, April 2022)]"
+41,148,replication,NA
+41,158,replication,"Azevedo et al. [Preprint, not available] [n=1502, citations=NA]. 
+],"

@@ -4,11 +4,11 @@
 
 generate_apa_reference <- function(authors, year, title, source, volume, issue, doi, weblink,
                                    return_html = FALSE, format_journal_case = TRUE) {
-  id <- seq_along(authors)
+    id <- seq_along(authors)
 
   # Extract last names and initials
   citations <- tibble::tibble(id, authors, year, title, source, volume, issue, doi, weblink) %>%
-    dplyr::mutate(dplyr::across(.fns = ~dplyr::na_if(.x, ""))) %>%
+    dplyr::mutate(dplyr::across(dplyr::where(is.character), .fns = ~dplyr::na_if(.x, ""))) %>%
     mutate(last_names = stringr::str_replace_all(authors, "(,.*? and)", "__") %>% stringr::str_remove(",.*$") %>% stringr::str_split("__ "),
            initials = stringr::str_replace_all(authors, "( and.*?, )", "__") %>% stringr::str_remove("^.*?,") %>%
              stringr::str_split("__") %>% purrr::map(~.x %>% stringr::str_remove_all("\\.") %>%
@@ -25,6 +25,14 @@ generate_apa_reference <- function(authors, year, title, source, volume, issue, 
   if (format_journal_case) {
     citations <- citations %>% dplyr::mutate(source = stringr::str_to_title(source))
   }
+
+  unlist_paste <- function(x) {
+    x[map_lgl(x, is.null)] <- NA
+    map_chr(x, ~paste(.x, collapse = ", "))
+  }
+
+  # Flatten remaining lists
+  citations <- citations %>% mutate(across(c(where(is.list), -authors), ~.x %>% unlist_paste()))
 
   # Helper function to deal with missing values
   nNA <- function (x, ..., alt = "", pre = "") {
@@ -54,7 +62,6 @@ generate_apa_reference <- function(authors, year, title, source, volume, issue, 
 
 
 generate_apa_citation <- function(authors, year) {
-
 
   id <- seq_along(authors)
   # Extract last names and initials

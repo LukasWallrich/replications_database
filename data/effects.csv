@@ -1,10 +1,6 @@
 effect_id,category,title,description,status
-7,Social Psychology,Fluency priming,NA,not replicated
-15,Social Psychology,Honesty priming,"related terms: goal-priming, social priming). An increased level of honesty to embarrassing behaviours after exposure to honesty-related words",not replicated.
 18,Social Psychology,Verbal framing (temporal tense),Participants who read what a person **was doing** (relative to those who read what person **did**) showed enhanced accessibility of intention-related concepts and attributed more intentionality to the person,mixed
-31,Social Psychology,Stereotype threat on Asian women’s mathematical performance,"alt-term = stereotype lift), i.e. the interaction between race, gender and stereotyping. This study found that Asian-American women performed better on a math test when their ethnic identity was activated, but worse when their gender identity was activated, compared with a control group who had neither identity activated",Mixed
 58,Social Psychology,Incidental environmental anchoring effect,"incidental anchoring [[Critcher & Gilovich, 2008]](https://doi.org/10.1002/bdm.586), basic anchoring [[Wilson, Houston, Etling, & Brekke, 1996]](https://doi.org/10.1037//0096-3445.125.4.387) “Anchor values that are incidentally present in the environment can affect a person’s numerical estimates (...) these effects were not qualified by participants’ expertise in the relevant domain (study 1) or by their ability to subsequently recall the anchor value (study 3).” (Critcher & Gilovich, 2008",not replicated
-75,Cognitive Psychology,Scarcity effect - Attention,NA,mixed
 76,Cognitive Psychology,Scarcity effect - Meaning in life,NA,not replicated
 77,Cognitive Psychology,Scarcity effect - Discounting,NA,replicated
 78,Cognitive Psychology,Scarcity effect - Physical pain,NA,replicated
@@ -14,10 +10,15 @@ effect_id,category,title,description,status
 82,Cognitive Psychology,Scarcity effect - Opportunity costs,_Opportunity costs._** Poor people are more likely to consider opportunity costs spontaneously,NA
 83,Cognitive Psychology,Scarcity effect - Conscious thoughts,NA,not replicated
 84,Cognitive Psychology,Scarcity effect - Absoluteness of losses,NA,not replicated
-108,Judgement and Decision Making/Behavioural Economics,Money Market versus Goods/Social Market,NA,mixed
 127,Marketing,Scarcity effect - Overborrowing,NA,replicated
+128,Marketing,Scarcity effect - Resource allocation,NA,reversed
 129,Marketing,Scarcity effect - Planning,NA,not replicated
+130,Marketing,Scarcity effect - Competition/threat,NA,not replicated
+131,Marketing,Scarcity effect - Brand attitudes,NA,"replicated (NS); reported effects were not replicated, while a non-reported effect remained NS:"
 132,Marketing,Scarcity effect - Product use creativity,NA,not replicated
-139,Neuroscience (humans),Structural brain-behaviour correlations - the association between social network size and grey matter volume,"**The association between social network size and grey matter volume**. Individual differences in the number of Facebook friends (FBN) are positively correlated with grey matter volume in several brain areas: left middle temporal gyrus (MTG), right superior temporal sulcus (STS), rich entorhinal cortex (EC), left and right amygdala",mixed
+133,Marketing,Scarcity effect - Wage rates,NA,not replicated
+134,Marketing,Scarcity effect - Selfishness,NA,not replicated
+135,Marketing,Scarcity effect - Preference for material goods,NA,replicated
+136,Marketing,Scarcity effect - Preference polarization,NA,not replicated
 140,Neuroscience (humans),Structural brain-behaviour correlations - the association between distractibility and grey matter volume,NA,not replicated
-142,Neuroscience (humans),Structural brain-behaviour correlations - the association between control over speed/accuracy of perceptual decisions and white matter tracts strength,NA,mixed
+141,Neuroscience (humans),Structural brain-behaviour correlations - the association between attention and cortical thickness,NA,not replicated.
