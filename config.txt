@@ -1,0 +1,2 @@
+user: shiny
+pwd: 6LOexxZbeE2vnf8PYSQ0MQ
