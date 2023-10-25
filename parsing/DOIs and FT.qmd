@@ -1,0 +1,382 @@
+---
+title: "DOIs and FTs"
+format: html
+editor: visual
+---
+
+## Retrieve DOIs
+
+Use `rcrossref` to find DOIs
+
+```{r}
+library(tidyverse)
+library(rcrossref)
+merged_data <- readxl::read_excel("merged.xlsx") %>% 
+  rename(id = `...1`)
+```
+
+Functions to extract DOIs
+
+```{r}
+
+safe_str_detect <- function(...) {
+  (purrr::possibly(str_detect, FALSE, quiet = FALSE))(...) %>% {(!is.na(.) & .)}
+}
+
+clean_text <- function(x) {
+  stringr::str_squish(stringr::str_to_lower(str_replace_all(x, "<.*?>", " ") %>%
+                                              str_replace_all("[&#]{1}[0-9a-z]*?;", " ") %>% str_replace_all("[[:punct:]]", "") %>% stringi::stri_trans_general('Latin-ASCII')))
+}
+
+## Assess quality of match (compare title, first author, year) and merge data
+
+match_crossref <- function(df, crr) {
+  cr_match <- tibble()
+  comp_res <- c()
+  crr <- crr %>%
+    mutate(across(any_of(c("created", "published.print", "published.online", "issued")),
+                  ~ lubridate::year(lubridate::parse_date_time(.x, orders = c("%Y-%m-%d", "%Y", "%Y-%m"))),
+                  .names = "year_{.col}"
+    ))
+  if ((clean_text(crr$title) == clean_text(df$title) ||
+           safe_str_detect(clean_text(crr$title), clean_text(df$title)) ||
+           safe_str_detect(clean_text(df$title), clean_text(crr$title))) %>%
+      {!(is.na(.)) && .}) { # Treat NA (from missing Crossref title)
+    comp_res <- c(comp_res, "title: Y")
+  } else {
+    comp_res <- c(comp_res, "title: N")
+  }
+
+  years <- as.numeric(crr[safe_str_detect(names(crr), "year_")])
+
+  # Allow for +/- 1 year, nearly always just difference between online first and print
+  if (df$year %in% c(years, years + 1, years - 1)) {
+    comp_res <- c(comp_res, "year: Y")
+  } else {
+    comp_res <- c(comp_res, "year: N")
+  }
+
+  if (("author" %in% names(crr) &&
+      (safe_str_detect(clean_text(df$first_author), clean_text(crr$author[[1]]$family[1])))) %>%
+      {!(is.na(.)) && .}) { # Treat NA (from missing Crossref family field - e.g., for institutional authors)
+    comp_res <- c(comp_res, "1st: Y")
+  } else {
+    comp_res <- c(comp_res, "1st: N")
+  }
+  df$doi <- crr$doi
+  df$doi_url <- crr$url
+  df$abstract <- crr[["abstract"]]
+  if(is.null(df[["abstract"]])) df$abstract <- NA_character_
+  df$author <- crr[["author"]]
+  df$journal <- crr[["container.title"]]
+  df$type <- crr$type
+  df$cr_match <- str_flatten(comp_res, " | ")
+  df$cr_match_quality <- length(str_extract_all(df$cr_match, "Y")[[1]])==3
+  df$cr_title <- crr$title
+  df$cr_year <- do.call(pmin, c(crr[ safe_str_detect(names(crr), "year_")], na.rm=TRUE))
+
+  df
+
+}
+
+## Search crossref for reference matching Scholar hit
+### trying both title, author year and summary queries
+
+extract_crossref <- function(df) {
+
+  crr <- cr_works(flq = c(query.bibliographic =
+                            df$query), limit = 1)$data
+
+  if (!is.null(crr) && "title" %in% colnames(crr)) {
+     match_crossref(df, crr)
+  } else {
+    df
+  } 
+}
+```
+
+Extract DOIs
+
+```{r}
+original_publications <- merged_data %>% 
+  transmute(id, title = Original_Paper_title, 
+            first_author = str_extract(Original_Paper_ref, "\\w+") %>% str_trim(), 
+            year = str_extract(Original_Paper_ref, "\\d{4}")) 
+
+unique_originals <- original_publications %>% 
+  distinct(title, first_author, year) %>% 
+  mutate(query = paste(title, first_author, year))
+
+unique_originals_doi <- tibble()
+# Sometimes advisable to run this in chunks so that not all is lost if API times out
+unique_originals_doi <- unique_originals[351:505,] %>% 
+  pmap(\(...) tibble(...) %>% extract_crossref()) %>% 
+  bind_rows(unique_originals_doi)
+
+```
+
+```{r}
+unique_originals_doi %>% count(cr_match)
+
+
+# Review the non-matches
+ unique_originals_doi %>% 
+   filter(cr_match != "title: Y | year: Y | 1st: Y") %>% 
+   transmute(cr_match, title, cr_title, year, cr_year, first_author, 
+             doi,
+             cr_author = map_chr(author, 
+                                 ~if(is.null(.x)) NA else .x %>% pluck(1) %>% .[1])) %>%
+   arrange(cr_match) %>% 
+   clipr::write_clip()
+ 
+ # Default: include those where at least one matches, exclude others
+ # Override others
+ exclude <- c("10.1016/j.jml.2023.104426", "10.31234/osf.io/grb54", "10.4324/9780203496398-14", "10.18356/47346551-en", "10.1080/00396336108440274", "10.1037/e683302011-076", "10.1093/poq/14.4.683", "10.47362/ejsss.2022.3208", "10.37974/alf.89", "10.31234/osf.io/bs7jf", "10.1073/pnas.2115397118", "10.1073/pnas.2115397118", "10.1073/pnas.1716910114", "10.1037/t42029-000", "10.3410/f.1013984.194281")
+ include <- "10.1016/s0005-7967(09)80003-x"
+ 
+ unique_originals_doi <- unique_originals_doi %>% 
+   filter((str_detect(cr_match, "Y") & !doi %in% exclude) |
+            doi %in% include) %>% select(title, first_author, year,
+                                         doi, doi_url)
+
+ original_publications <- original_publications %>% 
+   left_join(unique_originals_doi)
+   
+
+ merged_data <- merged_data %>% left_join(original_publications %>% 
+                             select(id, Original_doi_cr = doi, Original_doi_url = doi_url))
+ 
+ merged_data %>% writexl::write_xlsx("merged_with_original_dois.xlsx")
+ 
+```
+
+## Scrape from URLs
+
+```{r}
+ merged_data <- readxl::read_xlsx("merged_with_original_dois.xlsx")
+ 
+URLs <- c(merged_data %>% filter(is.na(Critique_doi)) %>% pull(Critique_Link),
+          merged_data %>% filter(is.na(Original_doi_cr)) %>% pull(Original_Link)) %>% 
+  unique()
+                                 
+library(rvest)
+library(selenider)
+
+ session <- selenider_session(
+   "chromote",
+   timeout = 10
+ )
+
+get_doi <- function(url, sleep = 0) {
+
+     open_url(url)
+  
+  Sys.sleep(sleep)
+
+  page <- get_page_source()    
+
+  if (!(str_detect(tolower(get_page_source() %>% html_node("title") %>%
+    rvest::html_text()), "just a moment") %in% c(NA, FALSE)) |
+    str_detect(url, "psycnet.apa.org")) {
+      current_url <- get_session()$driver$Runtime$evaluate("window.location.href")$result$value
+    resp <- httr::GET(paste0("https://proxy.scrapeops.io/v1/?api_key=", SCRAPEOPS_API_KEY, "&url=", current_url, "&premium=true"))
+    if (resp$status_code != 200) {
+      resp <- httr::GET(paste0("https://proxy.scrapeops.io/v1/?api_key=", SCRAPEOPS_API_KEY, "&url=", current_url, "&premium=true"))
+      if (resp$status_code != 200) return(list(NA, NA))
+    }
+    sleep = 1 # To avoid recursion here
+    page <- rvest::read_html(resp)
+  }
+
+  text_body <- page %>% html_nodes("body") %>% html_text()
+  
+  # Find the first match using the pattern
+  pattern <- '10\\.\\S{5,}?(?=[\\s,;]|[#?&]|$)'
+  first_doi <- str_extract(text_body, pattern)
+  
+  # Remove (closing) bracket unless there are brackets within the DOI
+  if (!str_detect(first_doi, fixed("("))) first_doi <- str_remove(first_doi, fixed(")"))
+  
+  if (is.na(first_doi) & sleep == 0) {
+    get_doi(url, sleep = 4)
+    } else {
+  
+  other_doi <- setdiff(str_extract_all(text_body, pattern) %>% unlist(), first_doi)
+  
+  if (length(first_doi) == 0) return(list(NA, NA))
+
+  list(first_doi, other_doi)
+
+}
+}
+
+#input <- read.csv("email_scrape/in.csv")
+#output <- read.csv("email_scrape/out.csv", colClasses = "character")
+
+
+#input <- input %>% filter(!DOI %in% output$DOI)
+
+input <- tibble(url = URLs)
+output <- tibble()
+i <- 1
+
+#This allows to resume at i
+for (i in i:nrow(input)) {
+  doi_result <- purrr::possibly(get_doi, otherwise = list(NA, NA))(input$url[i])
+  output <- bind_rows(output,
+                      tibble(url = input$url[i], first_doi = doi_result[[1]],
+                             other_doi = list(doi_result[[2]])))
+  message(last(output$first_doi))
+}
+
+# Remove PMCID:
+output <- output %>% transmute(url, doi = first_doi %>% str_remove(fixed("PMCID:")))
+
+merged_data <- merged_data %>% left_join(output %>% rename(Critique_doi_parsed = doi, Critique_Link = url))
+
+# Remove text after closing bracket from all DOIs
+merged_data <- merged_data %>%
+  mutate(across(
+    c(matches("doi"), -c(Original_doi_cr, Original_doi_url)),
+    ~ ifelse(
+        (str_locate(.x, "\\(")[, 1] < str_locate(.x, "\\)")[, 1]) %in% c(TRUE, NA),
+      .x,
+      str_remove(.x, "\\).*$")
+    ) %>% 
+      str_remove("[#?].*$")
+  ))
+
+
+```
+
+## Retrieve full-text
+
+```{r}
+
+unique_dois <- c(merged_data$Critique_doi, merged_data$Critique_doi_parsed, 
+                 merged_data$Original_doi_cr, merged_data$Original_doi) %>% 
+  unique() %>% na.omit()
+
+
+# **Could** be done with scihub (if this was deemed legal & ethical)
+# For that, would need to use trace(scihubr::download_paper, edit = TRUE) to change
+# function to access working domain
+
+#remotes::install_github("netique/scihubr")
+i <- 1
+for (i in i:length(unique_dois)) {
+    fn <- paste0("full_text/", str_replace(unique_dois[i], "/", "--"), ".pdf")
+    if (!file.exists(fn)) {
+           res <- possibly(scihubr::download_paper)(unique_dois[i], 
+                              fn,  
+                              open = FALSE)
+               if (!file.exists(fn)) message("\nFail with ", unique_dois[i])
+
+    }
+    }
+```
+
+# Get citations
+
+```{r}
+
+
+citations <- unique_dois %>% map(~cr_cn(.x, cache = TRUE))
+
+safe_format <- function(bibtex) {
+  purrr::possibly(format, otherwise = NA)(bibtex, style = "text")
+}
+
+bibtex_to_apa <- function(bibtex, warn = FALSE) {
+  
+  if (is.na(bibtex)) return(NA)
+  
+  if(!exists("cite_tmp")) cite_tmp <<- tempfile()
+  fileConn<-file(cite_tmp)
+  writeLines(bibtex, fileConn)
+  close(fileConn)
+
+  if (warn) {
+    t <- bibtex::read.bib(cite_tmp)} else{
+      t <- suppressMessages(bibtex::read.bib(cite_tmp))
+    }
+  
+    out <- safe_format(t)
+
+
+  if(length(out) == 0) return(NA)
+  out
+}
+
+unlist_w_NULLs <- function(x, only_first = FALSE) {
+  x[map_lgl(x, is.null)] <- NA
+  if (!only_first) {
+  if (any(lengths(x) > 1)) warning("Some list elements had lengths > 1. Beware if using this in a dataframe.")
+  } else {
+    if (any(lengths(x) > 1)) {
+       x <- map(x, ~ {
+      if(length(.x) > 1) {
+        .x <- list(.x[[1]])
+      }
+      .x
+    })
+}}
+  unlist(x)
+}
+
+references <- tibble(doi = unique_dois, ref_bibtex = unlist_w_NULLs(citations))
+
+apa_refs <- map_chr(references$ref_bibtex, bibtex_to_apa)
+
+references$ref_apa <- apa_refs
+
+references$file_name <- paste0(str_replace(references$doi, "/", "--"), ".pdf")
+
+merged_data <- merged_data %>% mutate(Original_doi_from_url = Original_doi, 
+                       Original_doi = coalesce(Original_doi_cr, Original_doi_from_url),
+                       Critique_doi_from_url = Critique_doi,
+                       Critique_doi = coalesce(Critique_doi_from_url, Critique_doi_parsed))
+
+merged_data <- merged_data %>% left_join(references %>% rename_with(~paste0("Critique_", .x))) %>% 
+  left_join(references %>% rename_with(~paste0("Original_", .x))) 
+
+```
+
+# Add all abstracts
+
+```{r}
+missing_abstracts <- setdiff(unique_dois, c(merged_data$Original_doi[!is.na(merged_data$Original_Abstract)], merged_data$Critique_doi[!is.na(merged_data$Critique_Abstract)]))
+
+# Cache only available in this rcrossref version - https://github.com/ropensci/rcrossref/pull/241
+# With normal version, drop cache = TRUE
+abstracts <- map(missing_abstracts, possibly(cr_abstract, otherwise = NA), cache = TRUE)
+
+abstracts_tbl <- tibble(doi = missing_abstracts, abstract = unlist_w_NULLs(abstracts))
+
+merged_data <- merged_data %>% left_join(abstracts_tbl %>% rename_with(~paste0("Critique_", .x))) %>% 
+  left_join(abstracts_tbl %>% rename_with(~paste0("Original_", .x))) 
+
+
+```
+
+# Rearrange and save
+
+```{r}
+merged_data <- merged_data %>%
+  select(
+    id, Discipline, Effect,
+    Original_Paper_title, Original_ref_apa, Original_Link, Original_doi, Original_file_name, Original_N, Effect_size_original, Original_Paper_Notes,
+    Critique_text, Critique_ref_apa, Critique_Link, Critique_doi, Critique_file_name, Critique_N, Effect_size_replication, Critique_Notes,
+    Original_Abstract, Critique_Abstract,
+    everything()
+  ) %>% 
+  mutate(Original_Abstract = coalesce(Original_Abstract, Original_abstract),
+         Critique_Abstract = coalesce(Critique_Abstract, Critique_abstract)) %>% 
+  select(-Original_abstract, -Critique_abstract)
+
+merged_data$Original_file_exists <- file.exists(file.path("full_text/", merged_data$Original_file_name))
+
+merged_data$Critique_file_exists <- file.exists(file.path("full_text/", merged_data$Critique_file_name))
+
+merged_data %>% writexl::write_xlsx("merged_data_augmented.xlsx")
+```
